@@ -154,3 +154,19 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 
 console.log('%c🪐 SOLTLESS — Vista Outro Mundo', 'font-family:monospace;font-size:13px;color:#3B82F6;background:#060810;padding:6px 14px;border-radius:4px;border-left:3px solid #F97316');
+
+// ── SOBRE — REVEAL HISTÓRIA ──────────────────
+(function(){
+  const btn = document.getElementById('sobreRevealBtn');
+  const wrap = document.getElementById('sobreHistoria');
+  if(!btn || !wrap) return;
+  btn.addEventListener('click', ()=>{
+    const isOpen = wrap.classList.toggle('open');
+    btn.textContent = isOpen ? 'FECHAR HISTÓRIA' : 'CONHECER NOSSA HISTÓRIA';
+    if(isOpen){
+      setTimeout(()=>{
+        wrap.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 100);
+    }
+  });
+})();
