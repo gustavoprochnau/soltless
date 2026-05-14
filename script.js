@@ -145,10 +145,10 @@
 
 // ── SMOOTH SCROLL ────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  const href = a.getAttribute('href');
+  if(!href || href === '#') return;
   a.addEventListener('click', e=>{
-    const target = document.querySelector(a.getAttribute('href'));
-    if(!target) return;
-    e.preventDefault();
+    const target = document.querySelector(href);
     target.scrollIntoView({behavior:'smooth', block:'start'});
   });
 });
@@ -168,5 +168,55 @@ console.log('%c🪐 SOLTLESS — Vista Outro Mundo', 'font-family:monospace;font
         wrap.scrollIntoView({behavior:'smooth', block:'start'});
       }, 100);
     }
+  });
+})();
+// ── PRODUCT MODAL ───────────────────────────
+(function(){
+  const modal = document.getElementById('product-modal');
+  const modalProductName = document.getElementById('modal-product-name');
+  const finalizeBtn = document.getElementById('finalize-purchase');
+  const closeBtn = document.querySelector('.close');
+
+  // Add click listeners to product cards
+  document.querySelectorAll('.pcard').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const productName = card.querySelector('h3').textContent;
+      modalProductName.textContent = productName;
+      modal.style.display = 'block';
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  // Finalize purchase
+  finalizeBtn.addEventListener('click', () => {
+    const productName = modalProductName.textContent;
+    const message = `Olá, gostaria de finalizar a compra do produto ${productName}.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/554599169464?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+    modal.style.display = 'none';
+  });
+})();
+
+// ── WHATSAPP CONTACT ────────────────────────
+(function(){
+  const whatsappLink = document.getElementById('whatsapp-contact');
+  if(!whatsappLink) return;
+  whatsappLink.addEventListener('click', () => {
+    const message = 'Olá, gostaria de entrar em contato.';
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/554599169464?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
   });
 })();
